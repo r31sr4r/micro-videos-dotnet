@@ -7,7 +7,7 @@ public class DomainValidation
     {
         if (target is null)        
             throw new EntityValidationException
-                ($"{fieldName} should not be null");
+                ($"{fieldName} cannot be null");
         
     }
 
@@ -15,7 +15,7 @@ public class DomainValidation
     {
         if (string.IsNullOrWhiteSpace(target))        
             throw new EntityValidationException
-                ($"{fieldName} should not be null or empty");
+                ($"{fieldName} cannot be empty or null");
         
     }
 

@@ -81,7 +81,7 @@ public class CategoryTest
 
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage("Name cannot not be empty or null");
+            .WithMessage("Name cannot be empty or null");
         
     }
 
@@ -126,7 +126,7 @@ public class CategoryTest
 
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage("Name should be less or equal 255 characters long");
+            .WithMessage("Name should not be greater than 255 characters long");
     }
 
     [Fact(DisplayName = nameof(ShouldThrowErrorWhenDescriptionIsGreaterThan10_000Characters))]
@@ -141,7 +141,7 @@ public class CategoryTest
 
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage("Description should be less or equal 10000 characters long");
+            .WithMessage("Description should not be greater than 10000 characters long");
     }
 
     [Fact(DisplayName = nameof(Activate))]
@@ -211,7 +211,7 @@ public class CategoryTest
             () => category.Update(name!, "Category Description");
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Name cannot not be empty or null");        
+            .WithMessage("Name cannot be empty or null");        
     }
 
     [Theory(DisplayName = nameof(ShouldThrowUpdateErrorWhenNameIsLessThan3Characters))]
@@ -241,7 +241,7 @@ public class CategoryTest
             () => category.Update(invalidName, "Category Description");
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Name should be less or equal 255 characters long");
+            .WithMessage("Name should not be greater than 255 characters long");
     }
 
     [Fact(DisplayName = nameof(ShouldThrowUpdateErrorWhenDescriptionIsGreaterThan10_000Characters))]
@@ -258,7 +258,7 @@ public class CategoryTest
             () => category.Update("Category Name", invalidDescription);
 
         action.Should().Throw<EntityValidationException>()
-            .WithMessage("Description should be less or equal 10000 characters long");
+            .WithMessage("Description should not be greater than 10000 characters long");
 
     }
 
