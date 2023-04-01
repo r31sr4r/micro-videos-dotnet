@@ -5,16 +5,17 @@ using FC.Codeflix.Catalog.UnitTests.Common;
 using Moq;
 using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.DeleteCategory;
 
-[CollectionDefinition(nameof(GetCategoryTestFixture))]
-public class GetCategoryTestFixtureCollection :
-    ICollectionFixture<GetCategoryTestFixture>
+[CollectionDefinition(nameof(DeleteCategoryTestFixture))]
+public class DeleteCategoryTestFixtureCollection
+    : ICollectionFixture<DeleteCategoryTestFixture>
 { }
-
-public class GetCategoryTestFixture : BaseFixture
+public class DeleteCategoryTestFixture : BaseFixture
 {
-    public Mock<ICategoryRepository> GetRepositoryMock() => new();
+
+    public Category GetValidCategory()
+        => new(GetValidCategoryName(), GetValidCategoryDescription());
 
     public string GetValidCategoryName()
     {
@@ -34,10 +35,10 @@ public class GetCategoryTestFixture : BaseFixture
         return categoryDescription;
     }
 
-    public Category GetValidCategory()
-        => new(GetValidCategoryName(), GetValidCategoryDescription());
+
+    public Mock<ICategoryRepository> GetRepositoryMock() => new();
 
     public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
 
-}
 
+}

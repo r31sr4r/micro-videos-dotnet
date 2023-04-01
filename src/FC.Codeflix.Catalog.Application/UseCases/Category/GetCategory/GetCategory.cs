@@ -17,7 +17,6 @@ public class GetCategory : IGetCategory
         )
     {
         var category = await _repository.Get(request.Id, cancellationToken);
-
         return CategoryModelOutput.FromCategory(category);
         
     }
