@@ -1,12 +1,11 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.UnitTests.Application.DeleteCategory;
 using Moq;
 using Xunit;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 using FluentAssertions;
 using FC.Codeflix.Catalog.Application.Exceptions;
 
-namespace FC.Codeflix.Catalog.UnitTests.Common;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.DeleteCategory;
 
 [Collection(nameof(DeleteCategoryTestFixture))]
 public class DeleteCategoryTest

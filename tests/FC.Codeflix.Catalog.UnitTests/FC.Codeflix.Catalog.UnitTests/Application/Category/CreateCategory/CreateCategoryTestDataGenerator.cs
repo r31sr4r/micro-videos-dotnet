@@ -1,4 +1,6 @@
-﻿namespace FC.Codeflix.Catalog.UnitTests.Application.CreateCategory;
+﻿using FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory;
+
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.CreateCategory;
 public class CreateCategoryTestDataGenerator
 {
     public static IEnumerable<object[]> GetInvalidInputs(int numberOfIterations = 12)
@@ -7,7 +9,7 @@ public class CreateCategoryTestDataGenerator
         var invalidInputsList = new List<object[]>();
         var totalInvalidCases = 4;
 
-        for(int index = 0; index < numberOfIterations; index++)
+        for (int index = 0; index < numberOfIterations; index++)
         {
             switch (index % totalInvalidCases)
             {
@@ -17,7 +19,7 @@ public class CreateCategoryTestDataGenerator
                     fixture.GetInvalidInputShortName(),
                     "Name should be at least 3 characters long"
                 });
-                break;
+                    break;
                 case 1:
                     invalidInputsList.Add(new object[]
                     {
@@ -40,7 +42,7 @@ public class CreateCategoryTestDataGenerator
                         fixture.GetInvalidInputDescriptionTooLong(),
                         "Description should not be greater than 10000 characters long"
                     });
-                    break;  
+                    break;
             }
         }
 

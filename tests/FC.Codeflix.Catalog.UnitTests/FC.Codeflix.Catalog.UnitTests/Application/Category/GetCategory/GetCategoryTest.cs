@@ -5,7 +5,7 @@ using UseCases = FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using FC.Codeflix.Catalog.Application.Exceptions;
 
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.GetCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.GetCategory;
 
 [Collection(nameof(GetCategoryTestFixture))]
 public class GetCategoryTest
@@ -62,7 +62,7 @@ public class GetCategoryTest
         var input = new UseCases.GetCategoryInput(exampleGuid);
         var useCase = new UseCases.GetCategory(repositoryMock.Object);
 
-        var task = async () 
+        var task = async ()
             => await useCase.Handle(input, CancellationToken.None
         );
 
@@ -71,7 +71,7 @@ public class GetCategoryTest
         repositoryMock.Verify(repository => repository.Get(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
-        ), Times.Once);        
+        ), Times.Once);
 
     }
 }

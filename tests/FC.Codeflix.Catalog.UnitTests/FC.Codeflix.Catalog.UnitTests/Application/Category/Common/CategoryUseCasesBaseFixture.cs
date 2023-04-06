@@ -1,21 +1,16 @@
 ﻿using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Entity;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Common;
 using Moq;
-using Xunit;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.DeleteCategory;
-
-[CollectionDefinition(nameof(DeleteCategoryTestFixture))]
-public class DeleteCategoryTestFixtureCollection
-    : ICollectionFixture<DeleteCategoryTestFixture>
-{ }
-public class DeleteCategoryTestFixture : BaseFixture
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
+public abstract class CategoryUseCasesBaseFixture
+    : BaseFixture
 {
+    public Mock<ICategoryRepository> GetRepositoryMock() => new();
 
-    public Category GetValidCategory()
-        => new(GetValidCategoryName(), GetValidCategoryDescription());
+    public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
 
     public string GetValidCategoryName()
     {
@@ -35,10 +30,14 @@ public class DeleteCategoryTestFixture : BaseFixture
         return categoryDescription;
     }
 
+    public bool getRandomBoolean()
+        => new Random().NextDouble() < 0.5;
 
-    public Mock<ICategoryRepository> GetRepositoryMock() => new();
-
-    public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
-
+    public DomainEntity.Category GetValidCategory()
+    => new(
+        GetValidCategoryName(),
+        GetValidCategoryDescription(),
+        getRandomBoolean()
+        );
 
 }

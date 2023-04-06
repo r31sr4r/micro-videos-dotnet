@@ -1,14 +1,14 @@
 ﻿using FC.Codeflix.Catalog.Application.Exceptions;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
-using FC.Codeflix.Catalog.Domain.Entity;
+using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
 using UseCases = FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 
-namespace FC.Codeflix.Catalog.UnitTests.Application.UpdateCategory;
+namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryTestFixture))]
 public class UpdateCategoryTest
@@ -23,13 +23,13 @@ public class UpdateCategoryTest
     [Theory(DisplayName = nameof(UpdateCategory))]
     [Trait("Application", "UpdateCategory - Use Cases")]
     [MemberData(
-        nameof(UpdateCategoryDataGenerator.GetCategoriesToUpdate), 
+        nameof(UpdateCategoryDataGenerator.GetCategoriesToUpdate),
         parameters: 10,
         MemberType = typeof(UpdateCategoryDataGenerator)
     )]
     public async Task UpdateCategory(
-        Category categoryExample, 
-        UseCases.UpdateCategoryInput input
+        DomainEntity.Category categoryExample,
+        UpdateCategoryInput input
     )
     {
         var repositoryMock = _fixture.GetRepositoryMock();
@@ -77,8 +77,8 @@ public class UpdateCategoryTest
     MemberType = typeof(UpdateCategoryDataGenerator)
 )]
     public async Task UpdateCategoryWithoutProvidingIsActive(
-    Category categoryExample,
-    UseCases.UpdateCategoryInput exampleInput
+    DomainEntity.Category categoryExample,
+    UpdateCategoryInput exampleInput
 )
     {
         var input = new UpdateCategoryInput(
@@ -130,8 +130,8 @@ public class UpdateCategoryTest
         MemberType = typeof(UpdateCategoryDataGenerator)
     )]
     public async Task UpdateCategoryWithOnlyName(
-        Category categoryExample,
-        UseCases.UpdateCategoryInput exampleInput
+        DomainEntity.Category categoryExample,
+        UpdateCategoryInput exampleInput
     )
     {
         var input = new UpdateCategoryInput(
@@ -179,7 +179,7 @@ public class UpdateCategoryTest
     public async Task ThrowWhenCategoryNotFound()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();        
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var input = _fixture.GetValidInput();
         repositoryMock.Setup(repository => repository.Get(
             input.Id,
