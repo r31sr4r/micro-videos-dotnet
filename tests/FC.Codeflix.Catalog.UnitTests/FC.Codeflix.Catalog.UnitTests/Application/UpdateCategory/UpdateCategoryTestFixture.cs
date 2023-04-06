@@ -79,7 +79,7 @@ public class UpdateCategoryTestFixture
     {
         var invalidInputDescriptionTooLong = GetValidInput();
 
-        while (invalidInputDescriptionTooLong.Description.Length <= 10000)
+        while (invalidInputDescriptionTooLong.Description!.Length <= 10000)
             invalidInputDescriptionTooLong.Description =
                 $"{invalidInputDescriptionTooLong.Description} {Faker.Commerce.ProductDescription}";
 
