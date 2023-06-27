@@ -152,5 +152,8 @@ public class CreateCategoryTest
         await task.Should()
             .ThrowAsync<EntityValidationException>()
             .WithMessage(expectionMessage);
+
+        var dbCategoryList = _fixture.GetDbContext(true).Categories.ToList();
+        dbCategoryList.Should().BeEmpty();
     }
 }
