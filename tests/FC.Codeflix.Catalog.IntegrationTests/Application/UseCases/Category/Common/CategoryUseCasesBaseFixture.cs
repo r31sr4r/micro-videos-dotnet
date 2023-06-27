@@ -39,4 +39,5 @@ public class CategoryUseCasesBaseFixture
             .Select(_ => GetValidCategory()
         ).ToList();
     }
+
 }

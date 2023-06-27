@@ -3,6 +3,7 @@ using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
 using Xunit;
 using FluentAssertions;
 using FC.Codeflix.Catalog.Application.Exceptions;
+using FC.Codeflix.Catalog.Domain.Entity;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.GetCategory;
 
@@ -30,6 +31,15 @@ public class GetCategoryTest
         var useCase = new UseCase.GetCategory(repository);
 
         var output = await useCase.Handle(input, CancellationToken.None);
+
+        var dbCategory = await (_fixture.GetDbContext(true))
+            .Categories
+            .FindAsync(output.Id);
+        dbCategory.Should().NotBeNull();
+        dbCategory!.Name.Should().Be(output.Name);
+        dbCategory.Description.Should().Be(output.Description);
+        dbCategory.IsActive.Should().Be(output.IsActive);
+        dbCategory.CreatedAt.Should().Be(output.CreatedAt);
 
         output.Should().NotBeNull();
         output.Name.Should().Be(exampleCategory.Name);
