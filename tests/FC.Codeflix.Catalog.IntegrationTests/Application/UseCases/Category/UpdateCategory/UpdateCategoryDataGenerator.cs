@@ -1,4 +1,4 @@
-﻿namespace FC.Codeflix.Catalog.UnitTests.Application.Category.UpdateCategory;
+﻿namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.UpdateCategory;
 public class UpdateCategoryDataGenerator
 {
     public static IEnumerable<object[]> GetCategoriesToUpdate(int times = 10)

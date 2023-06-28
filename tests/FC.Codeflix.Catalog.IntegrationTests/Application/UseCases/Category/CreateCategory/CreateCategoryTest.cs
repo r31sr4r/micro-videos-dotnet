@@ -1,11 +1,10 @@
-﻿using ApplicationUseCases = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Domain.Exceptions;
 using FC.Codeflix.Catalog.Infra.Data.EF;
 using FC.Codeflix.Catalog.Infra.Data.EF.Repositories;
-using Xunit;
 using FluentAssertions;
-using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
-using FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.Domain.Exceptions;
+using Xunit;
+using ApplicationUseCases = FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Application.UseCases.Category.CreateCategory;
 
