@@ -1,5 +1,6 @@
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
+using FC.Codeflix.Catalog.Application.UseCases.Category.DeleteCategory;
 using FC.Codeflix.Catalog.Application.UseCases.Category.GetCategory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,18 @@ public class CategoriesController : ControllerBase
     {
         var output = await _mediator.Send(new GetCategoryInput(id), cancellation);
         return Ok(output);
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(
+        [FromRoute] Guid id,
+        CancellationToken cancellation
+    )
+    {
+        await _mediator.Send(new DeleteCategoryInput(id), cancellation);
+        return NoContent();
     }
 
 }
