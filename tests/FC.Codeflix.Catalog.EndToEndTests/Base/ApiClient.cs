@@ -27,17 +27,7 @@ public  class ApiClient
                 )
             );
 
-        var outputString = await response.Content.ReadAsStringAsync();
-        TOutupt? output = null;
-        if (!String.IsNullOrWhiteSpace(outputString))
-        {
-            output = JsonSerializer.Deserialize<TOutupt>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
-            );
-        }
+        var output = await GetOutput<TOutupt>(response);
         return (response, output);
     }
 
@@ -50,17 +40,8 @@ public  class ApiClient
                 route
             );
 
-        var outputString = await response.Content.ReadAsStringAsync();
-        TOutupt? output = null;
-        if (!String.IsNullOrWhiteSpace(outputString))
-        {
-            output = JsonSerializer.Deserialize<TOutupt>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
-            );
-        }
+        var output = await GetOutput<TOutupt>(response);
+
         return (response, output);
     }
 
@@ -71,9 +52,38 @@ public  class ApiClient
     {
         var response = await _httpClient.DeleteAsync(route);
 
+        var output = await GetOutput<TOutupt>(response);
+
+        return (response, output);
+    }
+
+    public async Task<(HttpResponseMessage?, TOutupt?)> Put<TOutupt>(
+        string route,
+        object payload
+    )
+        where TOutupt : class
+    {
+        var response = await _httpClient.PutAsync(
+                route,
+                new StringContent(
+                    JsonSerializer.Serialize(payload),
+                    Encoding.UTF8,
+                    "application/json"
+                )
+        );
+
+        var output = await GetOutput<TOutupt>(response);
+
+        return (response, output);
+    }
+
+    private async Task<TOutupt?> GetOutput<TOutupt>(HttpResponseMessage response) 
+        where TOutupt : class
+    {
         var outputString = await response.Content.ReadAsStringAsync();
         TOutupt? output = null;
-        if (!String.IsNullOrWhiteSpace(outputString))
+
+        if (!string.IsNullOrWhiteSpace(outputString))
         {
             output = JsonSerializer.Deserialize<TOutupt>(outputString,
                 new JsonSerializerOptions
@@ -82,6 +92,7 @@ public  class ApiClient
                 }
             );
         }
-        return (response, output);
+
+        return output;
     }
 }
