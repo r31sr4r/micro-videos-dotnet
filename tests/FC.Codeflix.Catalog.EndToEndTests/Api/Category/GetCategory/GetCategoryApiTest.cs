@@ -8,11 +8,15 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.GetCategory;
 
 [Collection(nameof(GetCategoryApiTestFixture))]
 public class GetCategoryApiTest
+    : IDisposable
 {
     private readonly GetCategoryApiTestFixture _fixture;
 
     public GetCategoryApiTest(GetCategoryApiTestFixture fixture) 
         => this._fixture = fixture;
+
+    public void Dispose()
+        => _fixture.CleanPersistence();
 
     [Fact(DisplayName = nameof(GetCategory))]
     [Trait("EndToEnd/API", "Category/Get - Endpoints")]

@@ -30,4 +30,10 @@ public class BaseFixture
          );
         return context;
     }
+    public void CleanPersistence()
+    {
+        var context = GetDbContext();
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+    }
 }

@@ -9,8 +9,11 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.UpdateCategory;
 
 [Collection(nameof(UpdateCategoryApiTestFixture))]
 public class UpdateCategoryApiTest
+    : IDisposable
 {
     private readonly UpdateCategoryApiTestFixture _fixture;
+    public void Dispose()
+        => _fixture.CleanPersistence();
     public UpdateCategoryApiTest(UpdateCategoryApiTestFixture fixture) => _fixture = fixture;
 
     [Fact(DisplayName = nameof(UpdateCategory))]

@@ -8,8 +8,12 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.ListCategories;
 
 [Collection(nameof(ListCategoriesApiTestFixture))]
 public class ListCategoriesApiTest
+    : IDisposable
 {
     private readonly ListCategoriesApiTestFixture _fixture;
+
+    public void Dispose()
+    => _fixture.CleanPersistence();
 
     public ListCategoriesApiTest(ListCategoriesApiTestFixture fixture) 
         => _fixture = fixture;

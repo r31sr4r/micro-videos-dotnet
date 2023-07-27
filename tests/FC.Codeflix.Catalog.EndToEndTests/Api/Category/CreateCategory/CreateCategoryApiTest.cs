@@ -10,12 +10,16 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.CreateCategory;
 
 [Collection(nameof(CreateCategoryApiTestFixture))]
 public class CreateCategoryApiTest
+    : IDisposable
 {
     private readonly CreateCategoryApiTestFixture _fixture;
     public CreateCategoryApiTest(CreateCategoryApiTestFixture fixture)
     {
         _fixture = fixture;
     }
+
+    public void Dispose()
+        => _fixture.CleanPersistence();
 
     [Fact(DisplayName = nameof(CreateCategory))]
     [Trait("EndToEnd/API", "Category/Create - Endpoints")]

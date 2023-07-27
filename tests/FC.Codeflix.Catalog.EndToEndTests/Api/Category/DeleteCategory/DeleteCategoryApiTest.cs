@@ -7,11 +7,15 @@ namespace FC.Codeflix.Catalog.EndToEndTests.Api.Category.DeleteCategory;
 
 [Collection(nameof(DeleteCategoryApiTestFixture))]
 public class DeleteCategoryApiTest
+    : IDisposable
 {
     private readonly DeleteCategoryApiTestFixture _fixture;
 
     public DeleteCategoryApiTest(DeleteCategoryApiTestFixture fixture) 
         => this._fixture = fixture;
+
+    public void Dispose()
+        => _fixture.CleanPersistence();
 
     [Fact(DisplayName = nameof(DeleteCategory))]
     [Trait("EndToEnd/API", "Category/Delete - Endpoints")]
