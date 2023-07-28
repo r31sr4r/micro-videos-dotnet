@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using System.Text;
 using System.Text.Json;
 
@@ -32,17 +33,33 @@ public  class ApiClient
     }
 
     public async Task<(HttpResponseMessage?, TOutupt?)> Get<TOutupt>(
-        string route
+        string route,
+        object? queryStringParametersObject = null
     )
     where TOutupt : class
     {
+        var url = PrepareGetRoute(route, queryStringParametersObject);
         var response = await _httpClient.GetAsync(
-                route
+                url 
             );
 
         var output = await GetOutput<TOutupt>(response);
 
         return (response, output);
+    }
+
+    private string PrepareGetRoute(
+        string route, object? 
+        queryStringParametersObject
+    )
+    {
+        if ( queryStringParametersObject is null )
+            return route;        
+        var parametersJson = JsonSerializer.Serialize(queryStringParametersObject);
+        var parametersDictionary = Newtonsoft.Json.JsonConvert
+            .DeserializeObject<Dictionary<string, string>>(parametersJson);
+
+        return QueryHelpers.AddQueryString(route, parametersDictionary!);
     }
 
     public async Task<(HttpResponseMessage?, TOutupt?)> Delete<TOutupt>(
