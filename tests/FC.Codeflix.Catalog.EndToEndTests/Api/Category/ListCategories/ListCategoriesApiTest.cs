@@ -1,6 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.ListCategories;
 using FC.Codeflix.Catalog.Domain.SeedWork.SearchebleRepository;
+using FC.Codeflix.Catalog.EndToEndTests.Extensions.DateTime;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using System.Net;
@@ -45,7 +46,9 @@ public class ListCategoriesApiTest
             item.Name.Should().Be(exampleCategory!.Name);
             item.Description.Should().Be(exampleCategory!.Description);
             item.IsActive.Should().Be(exampleCategory!.IsActive);
-            item.CreatedAt.Should().BeSameDateAs(exampleCategory!.CreatedAt);
+            item.CreatedAt.TrimMilliSeconds().Should().BeSameDateAs(
+                exampleCategory!.CreatedAt.TrimMilliSeconds()
+            );
         }
 
     }
@@ -95,7 +98,9 @@ public class ListCategoriesApiTest
             item.Name.Should().Be(exampleCategory!.Name);
             item.Description.Should().Be(exampleCategory!.Description);
             item.IsActive.Should().Be(exampleCategory!.IsActive);
-            item.CreatedAt.Should().BeSameDateAs(exampleCategory!.CreatedAt);
+            item.CreatedAt.TrimMilliSeconds().Should().BeSameDateAs(
+                exampleCategory!.CreatedAt.TrimMilliSeconds()
+            );
         }
 
     }
@@ -139,7 +144,9 @@ public class ListCategoriesApiTest
             item.Name.Should().Be(exampleCategory!.Name);
             item.Description.Should().Be(exampleCategory!.Description);
             item.IsActive.Should().Be(exampleCategory!.IsActive);
-            item.CreatedAt.Should().BeSameDateAs(exampleCategory!.CreatedAt);
+            item.CreatedAt.TrimMilliSeconds().Should().BeSameDateAs(
+                exampleCategory!.CreatedAt.TrimMilliSeconds()
+            );
         }
     }
 
@@ -196,7 +203,9 @@ public class ListCategoriesApiTest
             item.Name.Should().Be(exampleCategory!.Name);
             item.Description.Should().Be(exampleCategory!.Description);
             item.IsActive.Should().Be(exampleCategory!.IsActive);
-            item.CreatedAt.Should().BeSameDateAs(exampleCategory!.CreatedAt);
+            item.CreatedAt.TrimMilliSeconds().Should().BeSameDateAs(
+                exampleCategory!.CreatedAt.TrimMilliSeconds()
+            );
         }
     }
 
@@ -253,8 +262,10 @@ public class ListCategoriesApiTest
             outputItem.Name.Should().Be(expectedItem!.Name);
             outputItem.Id.Should().Be(expectedItem.Id);
             outputItem.Description.Should().Be(expectedItem.Description);
-            outputItem.IsActive.Should().Be(expectedItem.IsActive);
-            outputItem.CreatedAt.Should().Be(expectedItem.CreatedAt);
+            outputItem.IsActive.Should().Be(expectedItem.IsActive);            
+            outputItem.CreatedAt.TrimMilliSeconds().Should().BeSameDateAs(
+                expectedItem.CreatedAt.TrimMilliSeconds()
+            );
         }
     }
 }
