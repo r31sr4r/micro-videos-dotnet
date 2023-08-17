@@ -1,16 +1,29 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
+﻿using FC.Codeflix.Catalog.EndToEndTests.Extensions.String;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Text.Json;
 
 namespace FC.Codeflix.Catalog.EndToEndTests.Base;
+
+class SnakeCaseNamingPolicy : JsonNamingPolicy
+{
+    public override string ConvertName(string name)
+        => name.ToSnakeCase();
+}
+
 public  class ApiClient
 {
     private readonly HttpClient _httpClient;
+        private readonly JsonSerializerOptions _defaultSerializerOptions;
 
     public ApiClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
+        _defaultSerializerOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
+            PropertyNameCaseInsensitive = true
+        };
     }
 
     public async Task<(HttpResponseMessage?, TOutupt?)> Post<TOutupt>(
@@ -22,7 +35,10 @@ public  class ApiClient
         var response = await _httpClient.PostAsync(
                 route,
                 new StringContent(
-                    JsonSerializer.Serialize(payload),
+                    JsonSerializer.Serialize(
+                        payload, 
+                        _defaultSerializerOptions
+                    ),
                     Encoding.UTF8,
                     "application/json"
                 )
@@ -83,7 +99,10 @@ public  class ApiClient
         var response = await _httpClient.PutAsync(
                 route,
                 new StringContent(
-                    JsonSerializer.Serialize(payload),
+                    JsonSerializer.Serialize(
+                        payload,
+                        _defaultSerializerOptions
+                    ),
                     Encoding.UTF8,
                     "application/json"
                 )
@@ -102,11 +121,9 @@ public  class ApiClient
 
         if (!string.IsNullOrWhiteSpace(outputString))
         {
-            output = JsonSerializer.Deserialize<TOutupt>(outputString,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }
+            output = JsonSerializer.Deserialize<TOutupt>(
+                outputString,
+                _defaultSerializerOptions
             );
         }
 
