@@ -1,4 +1,5 @@
 ﻿using FC.Codeflix.Catalog.Api.ApiModels.Category;
+using FC.Codeflix.Catalog.Api.ApiModels.Response;
 using FC.Codeflix.Catalog.Application.UseCases.Category.Common;
 using FC.Codeflix.Catalog.Application.UseCases.Category.UpdateCategory;
 using FluentAssertions;
@@ -29,7 +30,7 @@ public class UpdateCategoryApiTest
 
         var (response, output) = await _fixture
             .ApiClient
-            .Put<CategoryModelOutput>(
+            .Put<ApiResponse<CategoryModelOutput>>(
             $"/categories/{exampleCategory.Id}", 
             categoryModelInput                        
         );
@@ -37,11 +38,12 @@ public class UpdateCategoryApiTest
         response.Should().NotBeNull();
         response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status200OK);
         output.Should().NotBeNull();
-        output!.Id.Should().Be(exampleCategory.Id);
-        output.Name.Should().Be(categoryModelInput.Name);
-        output.Description.Should().Be(categoryModelInput.Description);
-        output.IsActive.Should().Be((bool)categoryModelInput.IsActive!);
-        output.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
+        output!.Data.Should().NotBeNull();
+        output.Data.Id.Should().Be(exampleCategory.Id);
+        output.Data.Name.Should().Be(categoryModelInput.Name);
+        output.Data.Description.Should().Be(categoryModelInput.Description);
+        output.Data.IsActive.Should().Be((bool)categoryModelInput.IsActive!);
+        output.Data.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
 
         var category = await _fixture.Persistence.GetById(exampleCategory.Id);
         category.Should().NotBeNull();
@@ -65,7 +67,7 @@ public class UpdateCategoryApiTest
 
         var (response, output) = await _fixture
             .ApiClient
-            .Put<CategoryModelOutput>(
+            .Put<ApiResponse<CategoryModelOutput>>(
                 $"/categories/{exampleCategory.Id}", 
                 input
         );
@@ -73,11 +75,12 @@ public class UpdateCategoryApiTest
         response.Should().NotBeNull();
         response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status200OK);
         output.Should().NotBeNull();
-        output!.Id.Should().Be(exampleCategory.Id);
-        output.Name.Should().Be(input.Name);
-        output.Description.Should().Be(exampleCategory.Description);
-        output.IsActive.Should().Be((bool)exampleCategory.IsActive!);
-        output.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
+        output!.Data.Should().NotBeNull();
+        output.Data.Id.Should().Be(exampleCategory.Id);
+        output.Data.Name.Should().Be(input.Name);
+        output.Data.Description.Should().Be(exampleCategory.Description);
+        output.Data.IsActive.Should().Be((bool)exampleCategory.IsActive!);
+        output.Data.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
 
         var category = await _fixture.Persistence.GetById(exampleCategory.Id);
         category.Should().NotBeNull();
@@ -101,7 +104,7 @@ public class UpdateCategoryApiTest
 
         var (response, output) = await _fixture
             .ApiClient
-            .Put<CategoryModelOutput>(
+            .Put<ApiResponse<CategoryModelOutput>>(
                 $"/categories/{exampleCategory.Id}",
                 input
         );
@@ -109,11 +112,12 @@ public class UpdateCategoryApiTest
         response.Should().NotBeNull();
         response!.StatusCode.Should().Be((HttpStatusCode)StatusCodes.Status200OK);
         output.Should().NotBeNull();
-        output!.Id.Should().Be(exampleCategory.Id);
-        output.Name.Should().Be(input.Name);
-        output.Description.Should().Be(input.Description);
-        output.IsActive.Should().Be((bool)exampleCategory.IsActive!);
-        output.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
+        output!.Data.Should().NotBeNull();
+        output.Data.Id.Should().Be(exampleCategory.Id);
+        output.Data.Name.Should().Be(input.Name);
+        output.Data.Description.Should().Be(input.Description);
+        output.Data.IsActive.Should().Be((bool)exampleCategory.IsActive!);
+        output.Data.CreatedAt.Should().BeSameDateAs(exampleCategory.CreatedAt);
 
         var category = await _fixture.Persistence.GetById(exampleCategory.Id);
         category.Should().NotBeNull();
