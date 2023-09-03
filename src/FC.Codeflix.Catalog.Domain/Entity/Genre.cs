@@ -1,4 +1,6 @@
-﻿namespace FC.Codeflix.Catalog.Domain.Entity;
+﻿using FC.Codeflix.Catalog.Domain.Validation;
+
+namespace FC.Codeflix.Catalog.Domain.Entity;
 public class Genre
 {
     public Genre(
@@ -9,6 +11,8 @@ public class Genre
         Name = name;
         IsActive = isActive;
         CreatedAt = DateTime.Now;
+
+        Validate();
     }
 
     public string Name { get; private set; }
@@ -24,5 +28,14 @@ public class Genre
     {
         IsActive = false;
     }
+    public void Update(string name)
+    {
+        Name = name;
+        Validate();
+    }
+
+    public void Validate()
+        => DomainValidation
+            .NotNullOrEmpty(Name, nameof(Name));
     
 }

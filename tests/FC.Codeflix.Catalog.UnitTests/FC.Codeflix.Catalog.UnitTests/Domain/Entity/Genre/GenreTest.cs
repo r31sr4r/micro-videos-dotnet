@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using FC.Codeflix.Catalog.Domain.Exceptions;
+using FluentAssertions;
 using Xunit;
 using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 
@@ -30,6 +31,19 @@ public class GenreTest
         genre.IsActive.Should().BeTrue();
     }
 
+    [Theory(DisplayName = nameof(InstantiateThrowExceptionWhenNameEmpty))]
+    [Trait("Domain", "Genre - Aggregates")]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(null)]
+    public void InstantiateThrowExceptionWhenNameEmpty(string? name)
+    {
+        var action = new Action(() => new DomainEntity.Genre(name!));
+
+        action.Should().Throw<EntityValidationException>()
+            .WithMessage("Name cannot be empty or null");        
+    }
+
     [Theory(DisplayName = nameof(InstantiateWithIsActive))]
     [Trait("Domain", "Genre - Aggregates")]
     [InlineData(true)]
@@ -56,13 +70,11 @@ public class GenreTest
     [InlineData(false)]
     public void Activate(bool isActive)
     {
-        var genrerName = _fixture.GetValidGenreName();
-        var genre = new DomainEntity.Genre(genrerName, isActive);
+        var genre = _fixture.GetExampleGenre(isActive: isActive);
 
         genre.Activate();
 
         genre.Should().NotBeNull();
-        genre.Name.Should().Be(genrerName);
         genre.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         genre.IsActive.Should().BeTrue();
     }
@@ -73,15 +85,43 @@ public class GenreTest
     [InlineData(false)]
     public void Deactivate(bool isActive)
     {
-        var genrerName = _fixture.GetValidGenreName();
-        var genre = new DomainEntity.Genre(genrerName, isActive);
+        var genre = _fixture.GetExampleGenre(isActive: isActive);
 
         genre.Deactivate();
 
         genre.Should().NotBeNull();
-        genre.Name.Should().Be(genrerName);
         genre.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         genre.IsActive.Should().BeFalse();
+    }
+
+    [Fact(DisplayName = nameof(Update))]
+    [Trait("Domain", "Genre - Aggregates")]
+    public void Update()
+    {
+        var genre = _fixture.GetExampleGenre();
+        var newName = _fixture.GetValidGenreName();
+
+        genre.Update(newName);       
+
+        genre.Should().NotBeNull();
+        genre.Name.Should().Be(newName);
+        genre.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        genre.IsActive.Should().Be(genre.IsActive);
+    }
+
+    [Theory(DisplayName = nameof(UpdateThrowExceptionWhenNameEmpty))]
+    [Trait("Domain", "Genre - Aggregates")]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(null)]
+    public void UpdateThrowExceptionWhenNameEmpty(string? name)
+    {
+        var genre = _fixture.GetExampleGenre();
+
+        var action = new Action(() => genre.Update(name!));
+
+        action.Should().Throw<EntityValidationException>()
+            .WithMessage("Name cannot be empty or null");
     }
 
 }
