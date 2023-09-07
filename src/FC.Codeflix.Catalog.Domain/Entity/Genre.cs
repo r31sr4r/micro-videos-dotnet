@@ -1,5 +1,4 @@
 ﻿using FC.Codeflix.Catalog.Domain.Validation;
-using System.Security.Cryptography;
 
 namespace FC.Codeflix.Catalog.Domain.Entity;
 public class Genre
@@ -53,5 +52,15 @@ public class Genre
         Validate();
     }
 
+    public void RemoveCategory(Guid categoryId)
+    {
+        _categories.Remove(categoryId);
+        Validate();
+    }  
     
+    public void RemoveAllCategories()
+    {
+        _categories.Clear();
+        Validate();
+    }
 }
