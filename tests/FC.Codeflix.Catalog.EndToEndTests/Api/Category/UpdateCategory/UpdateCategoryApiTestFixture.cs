@@ -9,7 +9,7 @@ public class UpdateCategoryApiTestCollection
 { }
 
 public class UpdateCategoryApiTestFixture
-    : CategoryBaseFixture
+    : CategoryBaseFixture 
 {
     public UpdateCategoryApiInput GetExampleInput()
         => new(

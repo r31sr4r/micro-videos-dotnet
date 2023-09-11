@@ -3,6 +3,7 @@ using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
 using FC.Codeflix.Catalog.Domain.Repository;
 using FC.Codeflix.Catalog.UnitTests.Common;
 using Moq;
+using FC.Codeflix.Catalog.Application.UseCases.Category.CreateCategory;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Category.Common;
 public abstract class CategoryUseCasesBaseFixture
@@ -30,14 +31,11 @@ public abstract class CategoryUseCasesBaseFixture
         return categoryDescription;
     }
 
-    public bool getRandomBoolean()
-        => new Random().NextDouble() < 0.5;
-
-    public DomainEntity.Category GetValidCategory()
-    => new(
-        GetValidCategoryName(),
-        GetValidCategoryDescription(),
-        getRandomBoolean()
+    public CreateGenreInput GetValidCategory()
+    => new (
+            GetValidCategoryName(),
+            GetValidCategoryDescription(),
+            GetRandomBoolean()
         );
 
 }
