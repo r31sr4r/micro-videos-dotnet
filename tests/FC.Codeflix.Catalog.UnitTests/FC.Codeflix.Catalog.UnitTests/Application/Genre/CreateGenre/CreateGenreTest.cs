@@ -46,6 +46,7 @@ public class CreateGenreTest
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.IsActive.Should().Be(input.IsActive);
+        output.Categories.Should().HaveCount(0);
         output.Id.Should().NotBeEmpty();
         output.CreatedAt.Should().NotBeSameDateAs(default);
     }

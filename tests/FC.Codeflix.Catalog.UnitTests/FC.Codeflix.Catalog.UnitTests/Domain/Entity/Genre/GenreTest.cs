@@ -24,6 +24,7 @@ public class GenreTest
         var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         genre.Should().NotBeNull();
+        genre.Id.Should().NotBeEmpty();
         genre.Name.Should().Be(genrerName);
         genre.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         genre.CreatedAt.Should().BeOnOrAfter(datetimeBefore);
@@ -57,6 +58,7 @@ public class GenreTest
         var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         genre.Should().NotBeNull();
+        genre.Id.Should().NotBeEmpty();
         genre.Name.Should().Be(genrerName);
         genre.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         genre.CreatedAt.Should().BeOnOrAfter(datetimeBefore);

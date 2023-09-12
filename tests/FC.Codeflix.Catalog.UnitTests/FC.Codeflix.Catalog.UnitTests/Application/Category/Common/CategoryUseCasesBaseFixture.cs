@@ -31,7 +31,7 @@ public abstract class CategoryUseCasesBaseFixture
         return categoryDescription;
     }
 
-    public CreateGenreInput GetValidCategory()
+    public DomainEntity.Category GetValidCategory()
     => new (
             GetValidCategoryName(),
             GetValidCategoryDescription(),

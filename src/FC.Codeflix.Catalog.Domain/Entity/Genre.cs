@@ -1,7 +1,9 @@
-﻿using FC.Codeflix.Catalog.Domain.Validation;
+﻿using FC.Codeflix.Catalog.Domain.SeedWork;
+using FC.Codeflix.Catalog.Domain.Validation;
 
 namespace FC.Codeflix.Catalog.Domain.Entity;
 public class Genre
+    : AggregateRoot
 {
     public Genre(
         string name, 
