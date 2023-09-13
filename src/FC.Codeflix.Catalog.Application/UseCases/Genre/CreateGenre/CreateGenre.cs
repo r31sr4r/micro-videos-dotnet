@@ -10,11 +10,17 @@ public class CreateGenre
 
     private readonly IGenreRepository _genreRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public CreateGenre(IGenreRepository genreRepository, IUnitOfWork unitOfWork)
+    public CreateGenre(
+        IGenreRepository genreRepository, 
+        IUnitOfWork unitOfWork, 
+        ICategoryRepository categoryRepository
+    )
     {
         _genreRepository = genreRepository;
         _unitOfWork = unitOfWork;
+        _categoryRepository = categoryRepository;
     }
 
     public async Task<GenreModelOutput> Handle(
@@ -28,7 +34,23 @@ public class CreateGenre
         );
 
         if(request.CategoriesIds is not null)
+        {
+            var idsInPersistence = await _categoryRepository.GetIdsListByIds(
+                request.CategoriesIds,
+                cancellationToken
+            );
+            if(idsInPersistence.Count < request.CategoriesIds.Count)
+            {
+                var notFoundIds = request.CategoriesIds
+                    .Except(idsInPersistence)
+                    .ToList();
+                var notFoundIdsString = string.Join(", ", notFoundIds);
+                throw new RelatedAggregateException(
+                    $"Related category id (or ids) not found: {notFoundIdsString}"               
+                );
+            }
             request.CategoriesIds.ForEach(genre.AddCategory);
+        }
 
         await _genreRepository.Insert(genre, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);

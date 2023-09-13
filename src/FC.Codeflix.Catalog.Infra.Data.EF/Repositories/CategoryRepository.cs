@@ -79,7 +79,14 @@ public class CategoryRepository
         };
         return orderedQuery
             .ThenBy(x => x.CreatedAt);
-    } 
+    }
 
-
+    public async Task<IReadOnlyList<Guid>> GetIdsListByIds(List<Guid> ids, CancellationToken cancellationToken)
+    {
+        var query =  _categories.AsNoTracking();
+        return await query
+            .Where(x => ids.Contains(x.Id))
+            .Select(x => x.Id)
+            .ToListAsync(cancellationToken);
+    }
 }
