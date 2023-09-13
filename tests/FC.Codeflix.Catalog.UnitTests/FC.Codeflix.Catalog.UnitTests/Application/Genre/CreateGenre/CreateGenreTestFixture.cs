@@ -21,8 +21,22 @@ public class CreateGenreTestFixture
     public CreateGenreInput GetInput()
     => new(
         GetValidGenreName(),
-        GetRandomBoolean()
+        GetRandomBoolean(),
+        null
     );
+
+    public CreateGenreInput GetInputWithCategories()
+    {
+        var numOfCategoriesIds = new Random().Next(1, 10);
+        var categoriesIds = Enumerable.Range(1, numOfCategoriesIds)
+            .Select(_ => Guid.NewGuid())
+            .ToList();
+        return new(
+                GetValidGenreName(),
+                GetRandomBoolean(),
+                categoriesIds
+            );
+    }
 
     public Mock<IGenreRepository> GetRepositoryMock() => new();
 
