@@ -1,10 +1,5 @@
-﻿using DomainEntity = FC.Codeflix.Catalog.Domain.Entity;
-using FC.Codeflix.Catalog.UnitTests.Application.Genre.Common;
-
+﻿using FC.Codeflix.Catalog.UnitTests.Application.Genre.Common;
 using Xunit;
-using FC.Codeflix.Catalog.Application.Interfaces;
-using FC.Codeflix.Catalog.Domain.Repository;
-using Moq;
 using FC.Codeflix.Catalog.Application.UseCases.Genre.CreateGenre;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.Genre.CreateGenre;
@@ -45,7 +40,4 @@ public class CreateGenreTestFixture
             );
     }
 
-    public Mock<IGenreRepository> GetRepositoryMock() => new();
-    public Mock<IUnitOfWork> GetUnitOfWorkMock() => new();
-    public Mock<ICategoryRepository> GetCategoryRepositoryMock() => new();
 }

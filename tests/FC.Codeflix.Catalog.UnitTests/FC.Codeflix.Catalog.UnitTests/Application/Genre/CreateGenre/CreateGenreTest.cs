@@ -23,7 +23,7 @@ public class CreateGenreTest
     [Trait("Application", "Create Genre - Use Cases")]
     public async Task CreateGenre()
     {
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var repositoryMock = _fixture.GetGenreRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var useCase = new UseCases.CreateGenre(
@@ -60,7 +60,7 @@ public class CreateGenreTest
     public async Task CreateWithRelatedCategories()
     {
         var input = _fixture.GetInputWithCategories();
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var repositoryMock = _fixture.GetGenreRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         categoryRepositoryMock.Setup(
@@ -97,7 +97,7 @@ public class CreateGenreTest
         output.IsActive.Should().Be(input.IsActive);
         output.Categories.Should().HaveCount(input.CategoriesIds?.Count ?? 0);
         input.CategoriesIds?.ForEach(categoryId =>
-                   output.Categories.Should().Contain(categoryId)
+                   output.Categories.Should().Contain(relation => relation.Id == categoryId)
         );
         output.CreatedAt.Should().NotBeSameDateAs(default);
     }
@@ -108,7 +108,7 @@ public class CreateGenreTest
     {
         var input = _fixture.GetInputWithCategories();
         var exampleGuid = input.CategoriesIds![^1];
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var repositoryMock = _fixture.GetGenreRepositoryMock();
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         categoryRepositoryMock.Setup(
@@ -149,7 +149,7 @@ public class CreateGenreTest
     public async Task ThrowWhenNameIsInvalid(string name)
     {
         var input = _fixture.GetInput(name);
-        var repositoryMock = _fixture.GetRepositoryMock();
+        var repositoryMock = _fixture.GetGenreRepositoryMock();
         var categoryRepositoryMock = _fixture.GetCategoryRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();        
         var useCase = new UseCases.CreateGenre(
